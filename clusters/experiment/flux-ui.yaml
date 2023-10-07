@@ -7,7 +7,7 @@ spec:
   interval: 5m
   url: oci://ghcr.io/weaveworks/charts/weave-gitops
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta2
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
   name: weave-gitops
