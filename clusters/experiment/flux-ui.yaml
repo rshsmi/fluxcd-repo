@@ -29,4 +29,8 @@ spec:
       create: true
       username: admin
       passwordHash: "$2a$10$P/tHQ1DNFXdvX0zRGA8LPeSOyb0JXq9rP3fZ4W8HGTpLV7qHDlWhe"
+    service:
+      create: true
+      type: ClusterIP
+      port: 9001
   
