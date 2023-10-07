@@ -5,4 +5,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m
-  url: ghcr.io/weaveworks/charts/weave-gitops
+  url: oci://ghcr.io/weaveworks/charts/weave-gitops
