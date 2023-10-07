@@ -9,7 +9,7 @@ import (
 
 	fluxhelmv2beta1 "github.com/fluxcd/helm-controller/api/v2beta1"
 	"k8s.io/apimachinery/pkg/api/errors"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
@@ -18,10 +18,11 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"  
 )
 
+
 func main() {
-	log.SetLogger(zap.New(zap.UseDevMode(true)))  /
+	log.SetLogger(zap.New(zap.UseDevMode(true)))
 	http.HandleFunc("/check-release", checkReleaseHandler)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8081", nil)
 }
 
 func checkReleaseHandler(w http.ResponseWriter, r *http.Request) {
