@@ -8,18 +8,22 @@ spec:
   url: oci://ghcr.io/weaveworks/charts/weave-gitops
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmChart
+kind: HelmRelease
 metadata:
   name: weave-gitops
-  namespace: default
+  namespace: flux-system
 spec:
   interval: 5m0s
   chart: weave-gitops
-  reconcileStrategy: ChartVersion
   sourceRef:
     kind: HelmRepository
     name: weave-gitops
   version: 4.0.31
   values:
     replicaCount: 1
+    logLevel: info
+    adminUser:
+      create: true
+      username: admin
+      passwordHash: "$2a$10$P/tHQ1DNFXdvX0zRGA8LPeSOyb0JXq9rP3fZ4W8HGTpLV7qHDlWhe"
   
