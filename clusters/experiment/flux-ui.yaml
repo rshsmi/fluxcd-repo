@@ -18,7 +18,7 @@ spec:
   chart:
     spec:
       chart: weave-gitops
-      version: "4.0.31"
+      version: "5.0.31" # test
       sourceRef:
         kind: HelmRepository
         name: weave-gitops

@@ -10,7 +10,7 @@ import (
 	fluxhelmv2beta1 "github.com/fluxcd/helm-controller/api/v2beta1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/apimachinery/pkg/runtime"  // Corrected import
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -68,17 +68,27 @@ func checkReleaseHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	conditions := helmRelease.Status.Conditions
+	statusMap := make(map[string]string)
 	for _, condition := range conditions {
-		if condition.Type == "Ready" {  // Corrected line
-			response, err := json.Marshal(map[string]string{"status": string(condition.Status)})
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
-			}
-			w.Write(response)
-			return
+		switch condition.Type {
+		case "Ready":
+			statusMap["Ready"] = string(condition.Status)
+		case "ReconciliationSucceeded":
+			statusMap["ReconciliationSucceeded"] = string(condition.Status)
+		case "InstallSucceeded":
+			statusMap["InstallSucceeded"] = string(condition.Status)
 		}
 	}
 
-	http.Error(w, "Ready condition not found", http.StatusNotFound)
+	if len(statusMap) == 0 {
+		http.Error(w, "No relevant conditions found", http.StatusNotFound)
+		return
+	}
+
+	response, err := json.Marshal(statusMap)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Write(response)
 }
